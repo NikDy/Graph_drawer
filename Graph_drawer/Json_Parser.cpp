@@ -34,5 +34,13 @@ Graph Json_Parser::createGraph(std::string filepath)
 		}
 		new_graph.addPoint(doc["points"][i]["idx"].GetInt(), new_point);
 	}
+	for (int i = 0; i < doc["lines"].Size(); i++)
+	{
+		Graph_Line new_line(doc["lines"][i]["idx"].GetInt(),
+							doc["lines"][i]["length"].GetInt(),
+		std::pair<int, int>(doc["lines"][i]["points"][0].GetInt(), 
+							doc["lines"][i]["points"][1].GetInt()));
+		new_graph.addLine(doc["lines"][i]["idx"].GetInt(), new_line);
+	}
 	return new_graph;
 }
