@@ -36,6 +36,8 @@ bool Drawer::graphToShapes(Graph graph)
 	int rad = std::min(w_sizeX /(4 * x_ratio * scale), w_sizeY / (4 * y_ratio * scale));
 	int x_mark = 0;
 	int y_mark = 0;
+	lines.setPrimitiveType(sf::Lines);
+	lines.resize(graph.getLines().size());
 	for (auto point : graph.getPoints())
 	{
 		sf::Text text(std::to_string(point.first), font, 18);
@@ -57,6 +59,7 @@ bool Drawer::graphToShapes(Graph graph)
 void Drawer::drawAll()
 {
 	sf::RenderWindow window(sf::VideoMode(w_sizeX, w_sizeY), w_name.c_str());
+	sf::View camera(sf::FloatRect(0.f, 0.f, w_sizeX, w_sizeY));
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -76,6 +79,31 @@ void Drawer::drawAll()
 		{
 			window.draw(text);
 		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+		{
+			camera.zoom(1.005);
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+			camera.zoom(0.995);
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		{
+			camera.move(-3, 0);
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		{
+			camera.move(3, 0);
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+		{
+			camera.move(0, -3);
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+		{
+			camera.move(0, 3);
+		}
+
+		window.setView(camera);
 		window.display();
 	}
 }

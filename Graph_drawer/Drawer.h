@@ -17,6 +17,7 @@ private:
 	sf::Color w_shapes_color = sf::Color::Green;
 	int w_shape_scale = 2;
 	sf::Font font;
+	sf::VertexArray lines;
 
 
 public:

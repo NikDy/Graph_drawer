@@ -4,7 +4,7 @@
 int main()
 {
 	Json_Parser parser = Json_Parser();
-	auto small_graph = parser.createGraph("small_graph.json");
+	auto small_graph = parser.createGraph("big_graph.json");
 	Drawer drawer = Drawer(800, 600, "Drawer");
 	drawer.graphToShapes(small_graph);
 	drawer.drawAll();
