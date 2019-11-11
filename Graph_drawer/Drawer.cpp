@@ -26,32 +26,33 @@ Drawer::~Drawer()
 bool Drawer::graphToShapes(Graph graph)
 {
 	if (graph.getPoints().empty()) return false;
-	int x_ratio = w_sizeX / std::gcd(w_sizeX, w_sizeY);
-	int y_ratio = w_sizeY / std::gcd(w_sizeX, w_sizeY);
-	int scale = 1;
-	if (graph.getPoints().size() > x_ratio * y_ratio)
-	{
-		scale = (int)std::ceil(graph.getPoints().size() / x_ratio * y_ratio);
-	}
-	int rad = std::min(w_sizeX /(4 * x_ratio * scale), w_sizeY / (4 * y_ratio * scale));
-	int x_mark = 0;
-	int y_mark = 0;
-	lines.setPrimitiveType(sf::Lines);
-	lines.resize(graph.getLines().size());
+	int rad = 50;
+	int grid_size = std::ceil(std::sqrt(graph.getPoints().size()));
+	int grid_mark = 0;
 	for (auto point : graph.getPoints())
 	{
 		sf::Text text(std::to_string(point.first), font, 18);
-		text.setFillColor(sf::Color::Blue);
 		sf::CircleShape shape;
+
+		text.setFillColor(sf::Color::Blue);
 		shape.setRadius(float(rad));
 		shape.setFillColor(w_shapes_color);
-		shape.setPosition((x_mark % x_ratio) * 4 * rad + rad, (y_mark % y_ratio) * 4 * rad + rad);
-		shapes_to_draw.emplace_back(shape);
+		shape.setPosition(4 * rad * (grid_mark % grid_size) + 2 * rad, 4 * rad * (grid_mark / grid_size) + 2 * rad);
 		text.setOrigin(text.getLocalBounds().width / 2, text.getLocalBounds().height / 2);
 		text.setPosition(shape.getPosition().x + rad , shape.getPosition().y + rad);
+
+		shapes_to_draw.emplace(point.first ,shape);
 		text_to_draw.emplace_back(text);
-		x_mark++;
-		y_mark++;
+		grid_mark++;
+	}
+	for (auto line : graph.getLines())
+	{
+		auto start_pos = shapes_to_draw[line.second.points.first].getPosition();
+		auto end_pos = shapes_to_draw[line.second.points.second].getPosition();
+		selbaward::Line drawable_line(sf::Vector2f(start_pos.x + rad, start_pos.y + rad), sf::Vector2f(end_pos.x + rad, end_pos.y + rad));
+		drawable_line.setColor(sf::Color::Black);
+		drawable_line.setThickness(2);
+		lines_to_draw.emplace_back(drawable_line);
 	}
 	return true;
 }
@@ -71,14 +72,19 @@ void Drawer::drawAll()
 
 
 		window.clear(w_background_color);
+		for (auto line : lines_to_draw)
+		{
+			window.draw(line);
+		}
 		for (auto shape : shapes_to_draw)
 		{
-			window.draw(shape);
+			window.draw(shape.second);
 		}
 		for (auto text : text_to_draw)
 		{
 			window.draw(text);
 		}
+
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 		{
 			camera.zoom(1.005);
@@ -88,20 +94,22 @@ void Drawer::drawAll()
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		{
-			camera.move(-3, 0);
+			camera.move(-2, 0);
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		{
-			camera.move(3, 0);
+			camera.move(2, 0);
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		{
-			camera.move(0, -3);
+			camera.move(0, -2);
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 		{
-			camera.move(0, 3);
+			camera.move(0, 2);
 		}
+
+
 
 		window.setView(camera);
 		window.display();

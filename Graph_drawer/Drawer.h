@@ -4,11 +4,13 @@
 #include <vector>
 #include <numeric>
 #include "Graph.h"
+#include "Line.h"
 
 class Drawer
 {
 private:
-	std::vector<sf::CircleShape> shapes_to_draw;
+	std::map<int, sf::CircleShape> shapes_to_draw;
+	std::vector<selbaward::Line> lines_to_draw;
 	std::vector<sf::Text> text_to_draw;
 	int w_sizeX = 800;
 	int w_sizeY = 600;
@@ -18,6 +20,7 @@ private:
 	int w_shape_scale = 2;
 	sf::Font font;
 	sf::VertexArray lines;
+	
 
 
 public:

@@ -3,10 +3,12 @@
 
 int main()
 {
-	Json_Parser parser = Json_Parser();
-	auto small_graph = parser.createGraph("big_graph.json");
+
+
 	Drawer drawer = Drawer(800, 600, "Drawer");
-	drawer.graphToShapes(small_graph);
+	//drawer.graphToShapes(Json_Parser::createGraph("small_graph.json"));
+	drawer.graphToShapes(Json_Parser::createGraph("big_graph.json"));
 	drawer.drawAll();
+
 	return 0;
 }

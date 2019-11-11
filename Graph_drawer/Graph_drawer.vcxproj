@@ -142,6 +142,7 @@
     <ClCompile Include="Graph_Line.cpp" />
     <ClCompile Include="Graph_Point.cpp" />
     <ClCompile Include="Json_Parser.cpp" />
+    <ClCompile Include="Line.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Drawer.h" />
@@ -149,6 +150,7 @@
     <ClInclude Include="Graph_Line.h" />
     <ClInclude Include="Graph_Point.h" />
     <ClInclude Include="Json_Parser.h" />
+    <ClInclude Include="Line.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
