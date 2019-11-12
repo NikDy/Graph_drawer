@@ -40,8 +40,8 @@ bool Drawer::graphToShapes(Graph graph)
 		shape.setPosition(4 * rad * (grid_mark % grid_size) + 2 * rad, 4 * rad * (grid_mark / grid_size) + 2 * rad);
 		text.setOrigin(text.getLocalBounds().width / 2, text.getLocalBounds().height / 2);
 		text.setPosition(shape.getPosition().x + rad , shape.getPosition().y + rad);
-
-		shapes_to_draw.emplace(point.first ,shape);
+		
+		shapes_to_draw.emplace(point.first, shape);
 		text_to_draw.emplace_back(text);
 		grid_mark++;
 	}
@@ -94,19 +94,19 @@ void Drawer::drawAll()
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		{
-			camera.move(-2, 0);
+			camera.move(-1, 0);
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		{
-			camera.move(2, 0);
+			camera.move(1, 0);
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		{
-			camera.move(0, -2);
+			camera.move(0, -1);
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 		{
-			camera.move(0, 2);
+			camera.move(0, 1);
 		}
 
 

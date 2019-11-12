@@ -16,6 +16,7 @@ private:
 public:
 	bool addPoint(int idx_, Graph_Point point_); //return false if point with idx already exist
 	bool addLine(int idx_, Graph_Line line_); //return false if line with idx already exist
+	bool createAdjacencyLists();
 	std::map<int, Graph_Point>& getPoints();
 	std::map<int, Graph_Line>& getLines();
 

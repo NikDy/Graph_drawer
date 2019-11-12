@@ -42,5 +42,6 @@ Graph Json_Parser::createGraph(std::string filepath)
 							doc["lines"][i]["points"][1].GetInt()));
 		new_graph.addLine(doc["lines"][i]["idx"].GetInt(), new_line);
 	}
+	new_graph.createAdjacencyLists();
 	return new_graph;
 }
